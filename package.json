@@ -1,0 +1,16 @@
+{
+  "name": "discord-loader",
+  "version": "0.0.1",
+  "description": "Discord loader",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vuf",
+  "license": "MIT",
+  "dependencies": {
+    "asar": "^0.11.0",
+    "fs-extra": "^0.30.0",
+    "minimist": "^1.2.0"
+  }
+}
