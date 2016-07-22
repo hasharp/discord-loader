@@ -24,8 +24,10 @@
     }
 
 
+    window.__electron = electron;
+
     const userDir = path.join(__dirname, '../user');
-    process.env.NODE_PATH = userDir;
+    process.env.NODE_PATH += path.delimiter + userDir;
     mod.Module._initPaths();
 
 
