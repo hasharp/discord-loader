@@ -86,6 +86,13 @@ function modify(progDir) {
 
 
 function launchDiscord(appDir, profile) {
+    try {
+        fs.accessSync(tempJson, fs.F_OK);
+        console.error('Another discord-loader is in-progress, please try again later.');
+        console.error(`If the problem persists, please delete file "${tempJson}".`);
+        return;
+    } catch (e) {}
+
     const config = {
         profile: profile,
         appDir: profileDir,
