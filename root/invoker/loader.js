@@ -16,6 +16,7 @@ console.info('process.versions:', process.versions);
 const tempDir = path.join(__dirname, '../temp');
 const tempJson = path.join(tempDir, 'temp.json');
 const config = require(tempJson);
+const profile = config.profile;
 //fs.unlinkSync(tempJson);
 // delete after update process
 
@@ -29,10 +30,10 @@ function loader(packageJson) {
     const pkg = require(appAsarPackageJson);
 
     // modify profile dir
-    if (config.profile) {
-        const appDataDir = path.join(config.appDir, config.profile);
+    if (profile) {
+        const appDataDir = path.join(config.appDir, profile);
         const userDataDir = path.join(appDataDir, pkg.name || 'app');
-        const tempDir = path.join(config.tempDir, config.profile);
+        const tempDir = path.join(config.tempDir, profile);
 
         app.setPath('appData', appDataDir);
         app.setPath('userData', userDataDir);
@@ -40,11 +41,17 @@ function loader(packageJson) {
 
         // to allow multiple instances
         // TODO: restore it later?
-        app.setName(`${app.getName()} (${config.profile})`);
+        app.setName(`${app.getName()} (${profile})`);
     }
 
     // hack electron.app.getAppPath()
     app.setAppPath(appAsar);
+
+    // register information
+    require('./info.js').initialize({
+        profile: profile,
+        config: config,
+    });
 
     // pre action
     require('./before.js');

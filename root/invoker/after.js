@@ -6,6 +6,8 @@ const path = require('path');
 const electron = require('electron');
 const {app, BrowserWindow} = electron;
 
+const info = require('./info.js').acquire();
+
 
 const invokerDir = path.join(__dirname);
 const userDir = path.join(__dirname, '../user');
