@@ -115,12 +115,13 @@ function launchDiscord(appDir, profile) {
             throw 'Unsupported platform';
     }
 
-    childProcess.execFile(path.join(appDir, prog), args, (error, stdout, stderr) => {
-        if (error) {
-            throw error;
-        }
-        console.log(stdout);
-        console.error(stderr);
+    prog = path.join(appDir, prog);
+    const proc = childProcess.spawn(prog, args);
+    ['stdout', 'stderr'].forEach(intf => {
+        proc[intf].pipe(process[intf]);
+    });
+    proc.on('exit', code => {
+        console.log(`Child exited with code ${code}`);
     });
 }
 
