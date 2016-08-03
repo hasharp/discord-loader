@@ -29,7 +29,7 @@ const userDir = path.join(rootLoaderDir, 'user');
 const profileDir = path.join(rootLoaderDir, 'profiles');
 const tempDir = path.join(rootLoaderDir, 'temp');
 
-const tempJson = path.join(tempDir, 'temp.json');
+const sessionJson = path.join(tempDir, 'session.json');
 const rootLoaderJs = path.join(invokerDir, 'loader.js');
 
 
@@ -87,9 +87,9 @@ function modify(progDir) {
 
 function launchDiscord(appDir, profile) {
     try {
-        fs.accessSync(tempJson, fs.F_OK);
+        fs.accessSync(sessionJson, fs.F_OK);
         console.error('Another discord-loader is in-progress, please try again later.');
-        console.error(`If the problem persists, please delete file "${tempJson}".`);
+        console.error(`If the problem persists, please delete file "${sessionJson}".`);
         return;
     } catch (e) {}
 
@@ -98,7 +98,7 @@ function launchDiscord(appDir, profile) {
         appDir: profileDir,
         tempDir: tempDir,
     };
-    writeJsonSync(tempJson, config);
+    writeJsonSync(sessionJson, config);
 
     let prog, args;
     switch (os.platform()) {

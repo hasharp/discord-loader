@@ -14,7 +14,6 @@ const userDir = path.join(__dirname, '../user');
 const tempDir = path.join(__dirname, '../temp');
 
 const mainpageJs = path.join(invokerDir, 'mainpage.js');
-const tempJson = path.join(tempDir, 'temp.json');
 
 
 console.info('::: loaded', __filename);
@@ -31,13 +30,6 @@ function checkFunc() {
 
         if (/^https?:\/\/[\w\.-]+\/channels(\/|$)/.test(url)) {
             contents.executeJavaScript(`if(!window.isScriptLoaded){window.isScriptLoaded=true;require(${JSON.stringify(mainpageJs)})}`);
-        }
-        if (/^https?:/.test(url)) {
-            // update process finished
-            if (!isTempFileDeleted) {
-                fs.unlinkSync(tempJson);
-                isTempFileDeleted = true;
-            }
         }
     });
 }
