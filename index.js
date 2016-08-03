@@ -13,12 +13,19 @@ const argv = minimist(process.argv.slice(2), {
     default: {
         appdir: false,          // required
         profile: 'default',
+        debug: false,
     },
 });
-const {appdir, profile} = argv;
+const {appdir, profile, debug} = argv;
+
+if (debug) {
+    console.info('debug mode enabled.');
+    console.info('argv:');
+    console.dir(argv);
+}
 
 if (!appdir) {
-    console.log('Usage: discord-loader --appdir /path/to/Discord/ [--profile profilename]');
+    console.log('Usage: discord-loader --appdir /path/to/Discord/ [--profile profilename] [--debug]');
     process.exit(1);
 }
 
@@ -97,18 +104,36 @@ function launchDiscord(appDir, profile) {
         profile: profile,
         appDir: profileDir,
         tempDir: tempDir,
+        debug: debug,
     };
     writeJsonSync(sessionJson, config);
 
     let prog, args;
     switch (os.platform()) {
         case 'win32':
-            //*
-            prog = 'Update.exe';
-            args = ['-processStart', 'Discord.exe'];
-            /*/
-            prog = 'app-0.0.292/Discord.exe';
-            //*/
+            if (!debug) {
+                prog = 'Update.exe';
+                args = ['-processStart', 'Discord.exe'];
+            } else {
+                const rxSemver = /^app-(\d+)\.(\d+)\.(\d+)$/;
+                const apps = fs.readdirSync(appDir).filter(v => rxSemver.test(v)).sort((a, b) => {
+                    const matches = [a, b].map(v => v.match(rxSemver));
+                    for (let i = 1; i <= 3; i++) {
+                        const diff = parseInt(matches[1][i]) - parseInt(matches[0][i]);
+                        if (diff) return diff;
+                    }
+                    return 0;
+                });
+
+                if (!apps.length) {
+                    throw 'No apps found.';
+                }
+
+                const latestApp = apps[0];
+                console.log(`latest app: ${latestApp}`);
+
+                prog = path.join(latestApp, 'Discord.exe');
+            }
             break;
 
         default:
@@ -122,6 +147,9 @@ function launchDiscord(appDir, profile) {
     });
     proc.on('exit', code => {
         console.log(`Child exited with code ${code}`);
+        if (debug) {
+            setTimeout(()=>{}, 3000);
+        }
     });
 }
 
