@@ -32,14 +32,13 @@
 
 
     [
-        //'l-invoker',
-        'l-user',
+        'l-data',
     ].forEach(scheme => {
         webFrame.registerURLSchemeAsSecure(scheme);
         //webFrame.registerURLSchemeAsBypassingCSP(scheme);
     });
 
-    loadStylesheet('l-user://mainpage.css');
-    loadScript('l-user://mainpage.js');
+    loadStylesheet('l-data://user/mainpage.css');
+    loadScript('l-data://user/mainpage.js');
 
 })();

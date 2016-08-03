@@ -3,7 +3,7 @@
 const path = require('path');
 
 const electron = require('electron');
-const {app} = electron;
+const {app, protocol} = electron;
 
 const info = require('./info.js').acquire();
 
@@ -16,11 +16,13 @@ console.info('::: loaded', __filename);
 
 
 function registerProtocol(scheme, func) {
-    app.on('ready', () => {
-        // move to head when electron becomes >= v1.0.2
-        const {protocol} = electron;
+    protocol.registerStandardSchemes([scheme]);
 
-        protocol.registerFileProtocol(scheme, (request, callback) => {
+    app.on('ready', () => {
+        const internalScheme = `${scheme}-int`;
+
+        protocol.registerFileProtocol(internalScheme, (request, callback) => {
+            console.log(internalScheme, request);
             const file = func(scheme, request);
             callback({
                 path: file,
@@ -31,20 +33,38 @@ function registerProtocol(scheme, func) {
             }
         });
 
-        protocol.registerStandardSchemes([scheme]);
+        protocol.registerHttpProtocol(scheme, (request, callback) => {
+            const reqPath = request.url.replace(/^[^:]+:[\.\/\\]*/, '');
+            console.log(scheme, request, reqPath);
+            callback({
+                url: `${internalScheme}://${reqPath}`,
+                method: 'GET',
+            });
+        });
     });
 }
 
-function createManipulater(baseDir) {
-    return (scheme, request) => {
-        let file = request.url.replace(/^[^:]+:[\.\/\\]*/, '');
-        file = file.replace(/~PROFILE~/g, info.profile);
-        return path.join(baseDir, file);
-    };
-}
 
-//registerProtocol('l-invoker', createManipulater(invokerDir));
-registerProtocol('l-user', createManipulater(userDir));
+const directories = {
+    'user': userDir,
+    'invoker': invokerDir,
+};
+
+registerProtocol('l-data', (scheme, request) => {
+    let reqPath = request.url.replace(/^[^:]+:[\.\/\\]*/, '');
+    reqPath = reqPath.replace(/~PROFILE~/g, info.profile);
+
+    const match = reqPath.match(/^(.*?)(?:\/(.*))?$/);
+    const host = match[1];
+    const file = match[2];
+
+    if (!match[1] || !match[2]) {
+        return false;
+    }
+
+    const baseDir = directories[host];
+    return path.join(baseDir, file);
+});
 
 
 const userBeforeJs = path.join(userDir, 'before.js');
