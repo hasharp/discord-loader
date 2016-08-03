@@ -6,7 +6,7 @@ const os = require('os');
 const path = require('path');
 const childProcess = require('child_process');
 
-const asar = require('asar');
+const asar = require('asar-lite');
 const minimist = require('minimist');
 
 

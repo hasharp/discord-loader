@@ -12,7 +12,7 @@
   "author": "vuf",
   "license": "MIT",
   "dependencies": {
-    "asar": "^0.11.0",
+    "asar-lite": "^0.12.2",
     "fs-extra": "^0.30.0",
     "minimist": "^1.2.0"
   }
