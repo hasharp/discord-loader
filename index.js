@@ -177,9 +177,9 @@ function launchDiscord(appDir, profile) {
     });
     proc.on('exit', code => {
         console.log(`Child exited with code ${code}`);
-        if (debug) {
-            setTimeout(()=>{}, 3000);
-        }
+        setTimeout(() => {
+            process.exit(code);
+        }, debug ? 3000 : 100);
     });
 }
 
