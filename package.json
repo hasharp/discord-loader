@@ -15,5 +15,10 @@
     "asar-lite": "^0.12.2",
     "fs-extra": "^0.30.0",
     "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "glob-all": "^3.1.0",
+    "license-checker": "^5.1.2",
+    "nexe": "^1.1.2"
   }
 }
