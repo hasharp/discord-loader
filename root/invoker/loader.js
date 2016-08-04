@@ -4,6 +4,7 @@ const electron = require('electron');
 const {app} = electron;
 
 const fs = require('fs');
+const Module = require('module');
 const path = require('path');
 
 
@@ -84,11 +85,8 @@ function loader(packageJson) {
     // pre action
     require('./before.js');
 
-    const indexJs = path.join(appAsar, pkg.main);
-    // load index.js
-    require(indexJs);
-    // hack electron.remote.require()
-    process.mainModule = require.main = require('module')._cache[indexJs];
+    // load app
+    Module._load(appAsar, module, true);
 
     // post action
     require('./after.js');
