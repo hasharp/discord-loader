@@ -1,7 +1,7 @@
 # discord-loader
 Enhanced Discord client.
 
-`node index.js --appdir=<appdir> [--profile==<profile>]`
+`discord-loader --appdir /path/to/Discord/ [--profile profilename] [--debug]`
 
 ## Supported features
 - Multiple accounts
