@@ -30,8 +30,7 @@ if (debug) {
     console.dir(resources && resources.keys());
     console.info('\nprocess:');
     console.dir(process);
-    console.info(`\n__dirname: ${__dirname}\n__filename: ${__filename}`);
-    console.log('\n');
+    console.info('\n');
 }
 
 if (!appdir) {
