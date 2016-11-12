@@ -141,6 +141,7 @@ function generateExecutables() {
             ],
             nodeMakeArgs: [
                 '-j', cpuNum * 2,
+                '--loglevel', 'info',
             ],
             nodeVCBuildArgs: [
                 process.env.platform || 'x86',
