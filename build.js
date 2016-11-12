@@ -143,7 +143,7 @@ function generateExecutables() {
                 '-j', cpuNum * 2,
             ],
             nodeVCBuildArgs: [
-                'x86',
+                process.env.platform || 'x86',
                 'release',
                 'nosign',
             ],
