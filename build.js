@@ -48,7 +48,7 @@ function generateLicenseFile() {
             start: __dirname,
             production: true,
             development: false,
-        }, (obj, err) => {
+        }, (err, obj) => {
             if (err) return reject(err);
 
             let libraries = {
