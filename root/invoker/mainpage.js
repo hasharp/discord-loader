@@ -9,6 +9,7 @@
     const mod = require('module');
 
     const electron = require('electron');
+    const {remote} = electron;
     const {webFrame} = electron;
 
 
@@ -32,6 +33,12 @@
     mod.Module._initPaths();
 
 
+    window.discordLoader = {
+        info: remote.require(path.join(__dirname, 'info.js')).acquire(),
+    };
+
+
+    // custom protocols are registered in `./before.js`
     [
         'l-data',
     ].forEach(scheme => {

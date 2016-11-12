@@ -18,6 +18,8 @@ console.info('::: loaded', __filename);
 
 
 function registerProtocol(scheme, func) {
+    // to enable `require` with relative path, register custom http protocol via custom file protocol
+
     protocol.registerStandardSchemes([scheme]);
 
     app.on('ready', () => {
