@@ -16,14 +16,14 @@ Just download the files and execute the above command.
 
 ## Options
 - --appdir
-- - Specifies the path to Discord.
+  - Specifies the path to Discord.
 
 - --profile
-- - Specifies profile name.
-- - To launch multiple instances of Discord, specify this differently for each.
+  - Specifies profile name.
+  - To launch multiple instances of Discord, specify this differently for each.
 
 - --debug
-- - Enables debug mode.
+  - Enables debug mode.
 
 ## Using Example
 1. If you have never launched discord-loader, launch it once to create `loader` directory.
