@@ -13,3 +13,13 @@ install:
   - ps: Install-Product node $env:nodejs_version $env:platform
   - npm install
   - node --version
+
+test: off
+
+build_script:
+  - node build.js
+
+artifacts:
+  - path: 'build\*'
+
+deploy: off
