@@ -13,6 +13,7 @@ install:
   - ps: Install-Product node $env:nodejs_version $env:platform
   - npm install
   - node --version
+  - set PYTHON2=C:\Python27\python.exe
 
 test: off
 
