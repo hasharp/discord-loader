@@ -1,0 +1,213 @@
+@charset 'UTF-8';
+
+body .app {
+    background-position: center center;
+    background-size: cover;
+}
+
+#app-mount .search-bar {
+    background-color: rgba(46, 49, 54, .5);
+}
+#app-mount #friends {
+    background-color: rgba(54, 57, 62, .5);
+}
+#app-mount #friends > .friends-header {
+    background-color: rgba(54, 57, 62, .5);
+}
+#app-mount #voice-connection {
+    background-color: rgba(40, 43, 48, .5);
+}
+#app-mount .account {
+    background-color: rgba(40, 43, 48, .5);
+}
+#app-mount .guilds-wrapper {
+    background-color: rgba(30, 33, 36, .5);
+}
+#app-mount .channels-wrap {
+    /*background-color: rgba(28, 30, 34, .5);*/
+    background-color: transparent;
+}
+#app-mount .private-channels {
+    background-color: rgba(46, 49, 54, .5);
+}
+#app-mount .private-channels .channel.selected, #app-mount .private-channels .channel:hover {
+    background: -webkit-linear-gradient(left, rgba(40, 43, 48, .5) 85%, rgba(46, 49, 54, .5));
+    background: linear-gradient(90deg, rgba(40, 43, 48, .5) 85%, rgba(46, 49, 54, .5));
+}
+#app-mount #friends .friends-header .tab-bar .tab-bar-item:hover:not(.selected) {
+    background-color: rgba(46, 49, 54, .5);
+}
+#app-mount #friends .friends-header .tab-bar .tab-bar-item.selected {
+    background-color: rgba(255, 255, 255, .5);
+}
+#app-mount #friends .friends-header .tab-bar .tab-bar-item:hover:not(.selected) {
+    background-color: rgba(46, 49, 54, .5);
+}
+#app-mount #friends .friends-table .friends-row:hover {
+    background-color: rgba(65, 68, 73, .5);
+}
+#app-mount .private-channels .search-result.selected, #app-mount .private-channels .search-result:hover {
+    background: -webkit-linear-gradient(left, rgba(40, 43, 48, .5) 85%, rgba(46, 49, 54, .5));
+    background: linear-gradient(90deg, rgba(40, 43, 48, .5) 85%, rgba(46, 49, 54, .5));
+}
+
+#app-mount .guild-header header {
+    background-color: rgba(46, 49, 54, .7);
+}
+#app-mount .guild-header header:hover {
+    background-color: rgba(40, 43, 48, .7);
+}
+#app-mount .guild-header ul {
+    background-color: rgba(40, 43, 48, .8);
+}
+#app-mount .chat {
+    background-color: rgba(54, 57, 62, .5);
+}
+#app-mount .chat .title-wrap {
+    background-color: rgba(54, 57, 62, .5);
+}
+#app-mount .guild-channels {
+    background-color: rgba(46, 49, 54, .5);
+}
+#app-mount .chat > .content, #app-mount .friends-table, #app-mount .messages-wrapper {
+    /*background-color: rgba(54, 57, 62, .5);*/
+    background-color: transparent;
+}
+#app-mount .channel-members-wrap .channel-members {
+    /*background-color: rgba(46, 49, 54, .5);*/
+    background-color: transparent;
+}
+#app-mount .guild-channels .channel-text.selected, #app-mount .guild-channels .channel-text:hover {
+    background: -webkit-linear-gradient(left, rgba(40, 43, 48, .5) 85%, rgba(46, 49, 54, .5));
+    background: linear-gradient(90deg, rgba(40, 43, 48, .5) 85%, rgba(46, 49, 54, .5));
+}
+#app-mount .channel-members .member.popout-open, #app-mount .channel-members .member:hover {
+    background: -webkit-linear-gradient(left, rgba(40, 43, 48, .5) 85%, rgba(46, 49, 54, .5));
+    background: linear-gradient(90deg, rgba(40, 43, 48, .5) 85%, rgba(46, 49, 54, .5));
+}
+#app-mount .chat form .typing {
+    /*background-color: rgba(54, 57, 62, .5);*/
+    background-color: transparent;
+}
+#app-mount .invite-button {
+    background-color: rgba(46, 49, 54, .5);
+}
+#app-mount .message-group .comment .markup code.inline, #app-mount .message-group .comment .markup pre code {
+    background-color: rgba(46, 49, 54, .5);
+}
+#app-mount .message-group .comment .markup pre {
+    /*background-color: rgba(46, 49, 54, .5);*/
+    background-color: transparent;
+    border-color: rgba(40, 43, 48, .5);
+}
+
+#app-mount .guilds-wrapper .guilds-add {
+    background-color: rgba(30, 33, 36, .5);
+}
+#app-mount .account .btn, #app-mount #voice-connection .btn {
+    background-color: rgba(46, 49, 54, .5);
+}
+#app-mount .friends-table .messages .divider span, #app-mount .messages-wrapper .messages .divider span {
+    /*background-color: rgba(54, 57, 62, .5);*/
+    background-color: transparent;
+}
+#app-mount .chat .new-messages-bar {
+    background-color: rgba(114, 137, 218, .7);
+}
+
+#app-mount .settings .settings-header {
+    background-color: rgba(46, 49, 54, .8);
+}
+#app-mount .settings .settings-inner {
+    background-color: rgba(255, 255, 255, .8);
+}
+#app-mount .settings .settings-actions {
+    background-color: rgba(249, 249, 249, .8);
+}
+#app-mount .user-settings-modal-games {
+    background-color: rgba(255, 255, 255, .8);
+}
+#app-mount .user-settings-streamer-mode {
+    background-color: rgba(255, 255, 255, .8);
+}
+#app-mount #settings-roles .roles li.selected {
+    background: -webkit-linear-gradient(left, rgba(249, 249, 249, .8), rgba(255, 255, 255, .8));
+    background: linear-gradient(90deg, rgba(249, 249, 249, .8), rgba(255, 255, 255, .8));
+}
+#app-mount #settings-roles .roles li:hover {
+    background: -webkit-linear-gradient(left, rgba(251, 251, 251, .8), rgba(255, 255, 255, .8));
+    background: linear-gradient(90deg, rgba(251, 251, 251, .8), rgba(255, 255, 255, .8));
+}
+#app-mount .markdown-modal {
+    background-color: rgba(255, 255, 255, .8);
+}
+#app-mount .markdown-modal .markdown-modal-footer {
+    background-color: rgba(249, 249, 249, .8);
+}
+
+input[type=text], input[type=password], textarea {
+    background-color: rgba(255, 255, 255, .4);
+}
+
+#app-mount .context-menu {
+    background-color: rgba(40, 43, 48, .7);
+}
+#app-mount .context-menu .item:hover {
+    background-color: rgba(37, 40, 45, .7);
+}
+#app-mount .context-menu .item-subMenu {
+    background-color: rgba(40, 43, 48, .7);
+}
+#app-mount .context-menu .item-subMenu:hover {
+    background-color: rgba(40, 43, 48, .7);
+}
+#app-mount .context-menu .context-menu {
+    background-color: rgba(40, 43, 48, .7);
+}
+
+.theme-dark .friends-table .scroller-wrap ::-webkit-scrollbar-thumb,
+.theme-dark .messages-wrapper .scroller-wrap ::-webkit-scrollbar-thumb {
+    background-color: #1e2124;
+    border-color: #36393e
+}
+
+.theme-dark .friends-table .scroller-wrap ::-webkit-scrollbar-track-piece,
+.theme-dark .messages-wrapper .scroller-wrap ::-webkit-scrollbar-track-piece {
+    background-color: #2e3136;
+    border-color: #36393e
+}
+
+.theme-dark .friends-table .scroller-wrap.polyfill .scrollbar,
+.theme-dark .friends-table .scroller-wrap.polyfill .scrollbar:after,
+.theme-dark .messages-wrapper .scroller-wrap.polyfill .scrollbar,
+.theme-dark .messages-wrapper .scroller-wrap.polyfill .scrollbar:after {
+    background-color: #36393e
+}
+
+.theme-dark .friends-table .scroller-wrap.polyfill .scrollbar .thumb,
+.theme-dark .messages-wrapper .scroller-wrap.polyfill .scrollbar .thumb {
+    background-color: #36393e;
+    border-color: #36393e
+}
+
+.theme-dark .friends-table .scroller-wrap.polyfill .scrollbar .thumb:after,
+.theme-dark .messages-wrapper .scroller-wrap.polyfill .scrollbar .thumb:after {
+    background-color: #1e2124
+}
+
+.theme-dark .friends-table .scroller-wrap.polyfill .scrollbar .track,
+.theme-dark .messages-wrapper .scroller-wrap.polyfill .scrollbar .track {
+    background-color: #2e3136;
+    border-color: #36393e
+}
+
+
+.theme-dark code.hljs {
+    color: rgba(207, 239, 255, .7);
+}
+
+
+.guild-header ul {
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+}

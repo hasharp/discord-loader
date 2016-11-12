@@ -1,0 +1,8 @@
+@charset 'UTF-8';
+
+.attachment audio, .attachment video {
+    position: relative;
+    left: -40px;
+    margin-top: 10px;
+    width: 400px;
+}
