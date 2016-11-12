@@ -1,5 +1,7 @@
 'use strict';
 
+// This script will be invoked by `./loader.js` with `require` after the Discord App is loaded.
+
 const fs = require('fs');
 const path = require('path');
 

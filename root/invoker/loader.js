@@ -1,5 +1,7 @@
 'use strict';
 
+// This script will be invoked by `/app-*.*.*/resources/app/loader.js` (`../../indiv/loader.js`) with `require`.
+
 const electron = require('electron');
 const {app} = electron;
 
@@ -68,7 +70,7 @@ function loader(packageJson) {
         app.setPath('userData', userDataDir);
         app.setPath('temp', tempDir);
 
-        // to allow multiple instances
+        // to allow multiple instances, change app name
         // TODO: restore it later?
         app.setName(`${app.getName()} (${profile})`);
     }

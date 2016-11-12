@@ -1,5 +1,8 @@
 'use strict';
 
+// Information Registry Service
+// This is a module that user scripts can `require`.
+
 let info;
 
 module.exports = {

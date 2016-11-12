@@ -1,5 +1,8 @@
 'use strict';
 
+// ! Renderer Process Side Script
+// This script will be invoked by `./after.js` with `require` through `contents.executeJavaScript`.
+
 (function() {
 
     const path = require('path');
