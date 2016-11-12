@@ -11,6 +11,7 @@
   },
   "author": "vuf",
   "license": "MIT",
+  "repository": "https://github.com/vuf/discord-loader",
   "dependencies": {
     "asar-lite": "^0.12.3",
     "fs-extra": "^1.0.0",
