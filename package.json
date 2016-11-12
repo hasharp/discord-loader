@@ -12,13 +12,13 @@
   "author": "vuf",
   "license": "MIT",
   "dependencies": {
-    "asar-lite": "^0.12.2",
-    "fs-extra": "^0.30.0",
+    "asar-lite": "^0.12.3",
+    "fs-extra": "^1.0.0",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
     "glob-all": "^3.1.0",
-    "license-checker": "^5.1.2",
+    "license-checker": "^8.0.3",
     "nexe": "^1.1.2"
   }
 }
