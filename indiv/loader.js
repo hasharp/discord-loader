@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 
 // This script will be invoked directly by the Discord App.

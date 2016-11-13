@@ -18,6 +18,7 @@
     "minimist": "^1.2.0"
   },
   "devDependencies": {
+    "eslint": "^3.10.0",
     "glob-all": "^3.1.0",
     "license-checker": "^8.0.3",
     "nexe": "^1.1.2"
