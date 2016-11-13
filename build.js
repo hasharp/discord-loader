@@ -21,23 +21,37 @@ const outFile = path.join(buildDir, pkg.name);
 const licenseFile = path.join(buildDir, 'LICENSE.md');
 
 
+/**
+ * Append extension for executable files, currently only for Windows platform.
+ * @param exeFile {string} - filename of an executable file without the extension
+ * @returns {string} - filename with the extension
+ */
 function addExtension(exeFile) {
     return process.platform === 'win32' ? exeFile + '.exe' : exeFile;
 }
 
+/**
+ * Get the URL to the license file of the library.
+ * @param name {string} - the name of the library
+ * @param info {Object} - the license information object of the library
+ * @returns {string} - filename with the extension
+ */
 function getLicenseUrl(name, info) {
     if (!info.repository || !info.licenseFile) return false;
 
     const filePath = info.licenseFile.replace(/\\/g, '/').replace(/^.+\/node_modules\/.+?\//, '');
 
     if (/^https?:\/\/github\.com\//.test(info.repository)) {
-        // assume `master` branch as default
+        // assume `master` branch as a main branch
         return info.repository.replace(/https?:\/\/github.com\//, 'https://raw.githubusercontent.com/') + '/master/' + filePath;
     }
 
     throw `Unknown hosting: ${info.repository} (${name})`;
 }
 
+/**
+ * Generate license file.
+ */
 function generateLicenseFile() {
     return new Promise((resolve, reject) => {
         let content = '';
@@ -103,7 +117,14 @@ function generateLicenseFile() {
     });
 }
 
+/**
+ * Generate executable file.
+ */
 function generateExecutables() {
+    /**
+     * List the resource files (to embed them to the executable file).
+     * @returns {Object} - List of the resource files
+     */
     function getResourceFiles() {
         function globFiles(baseDir, masks) {
             const files = globAll.sync(masks.map(v => path.join(baseDir, v)), {
@@ -163,6 +184,9 @@ function generateExecutables() {
 }
 
 
+/**
+ * Build.
+ */
 function generate() {
     fs.ensureDirSync(buildDir);
 

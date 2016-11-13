@@ -49,10 +49,20 @@ const sessionJson = path.join(tempDir, 'session.json');
 const rootLoaderJs = path.join(invokerDir, 'loader.js');
 
 
+/**
+ * Writes data to file synchronously in JSON format.
+ * @param file {string} - filename
+ * @param data {Object} - data
+ */
 function writeJsonSync(file, data) {
     return fs.writeFileSync(file, JSON.stringify(data, null, '  '));
 }
 
+/**
+ * Copy resource files (./root/*, ./indiv/*).
+ * @param src  {string} - path to resource directory copy files from
+ * @param dest {string} - path to directory copy files to
+ */
 function extractResourceDirSync(src, dest) {
     if (isRelease) {
         const nSrc = path.normalize(src);
@@ -68,6 +78,11 @@ function extractResourceDirSync(src, dest) {
     }
 }
 
+/**
+ * Read resource files (./root/*, ./indiv/*).
+ * @param src {string} - path to resource file
+ * @returns {string} - content of the file (utf-8)
+ */
 function readResourceSync(src) {
     if (isRelease) {
         return resources.get(path.normalize(src)).toString();
@@ -77,6 +92,10 @@ function readResourceSync(src) {
 }
 
 
+/**
+ * Prepare files requried to launch discord-loader.
+ * This is called only when this is first launch of discord-loader.
+ */
 function initialize() {
     try {
         fs.accessSync(rootLoaderDir, fs.F_OK);
@@ -89,10 +108,19 @@ function initialize() {
     fs.ensureDirSync(tempDir);
 }
 
+/**
+ * Update core files.
+ * This will be called every launch of discord-loader.
+ */
 function update() {
     extractResourceDirSync('root/invoker', invokerDir);
 }
 
+/**
+ * Extract and modify package.json of the Discord App and make Discord App boot discord-loader.
+ * This will be called every launch of discord-loader (to follow updates of the Discord App).
+ * @param progDir {string} - '/path/to/Discord/app-#.#.#/'
+ */
 function modify(progDir) {
     const resDir = path.join(progDir, 'resources');
     const resAppDir = path.join(resDir, 'app');
@@ -121,6 +149,11 @@ function modify(progDir) {
 }
 
 
+/**
+ * Launch discord-loader (through modified Discord App).
+ * @param appDir {string} - '/path/to/Discord/'
+ * @param profile {string} - profile id
+ */
 function launchDiscord(appDir, profile) {
     try {
         fs.accessSync(sessionJson, fs.F_OK);
