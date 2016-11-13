@@ -13,9 +13,43 @@ const isRelease = !process.mainModule;
 const resources = isRelease && require('nexeres.js');
 
 
+/**
+ * Check if the path to the Discord App is valid.
+ * @param appDir {string} - '/path/to/Discord/'
+ * @returns {boolean} - true if valid
+ */
+function isValidAppDir(appDir) {
+    try {
+        fs.accessSync(path.join(appDir, 'app.ico'), fs.F_OK);
+        fs.accessSync(path.join(appDir, 'packages'), fs.F_OK);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Find the Discord App directory
+ * @returns {string|null} - '/path/to/Discord/' if found, null if not
+ */
+function findAppDir() {
+    let candidates = [];
+    switch (os.platform()) {
+        case 'win32':
+            if (process.env.LOCALAPPDATA) {
+                candidates.push(path.join(process.env.LOCALAPPDATA, 'Discord'));
+            }
+            break;
+    }
+
+    candidates = candidates.filter(isValidAppDir);
+    return candidates.length ? candidates[0] : null;
+}
+
+
 const argv = minimist(process.argv.slice(2), {
     default: {
-        appdir: false,          // required
+        appdir: findAppDir(),   // required
         profile: 'default',
         debug: false,
     },
@@ -37,6 +71,8 @@ if (!appdir) {
     console.log('Usage: discord-loader --appdir /path/to/Discord/ [--profile profilename] [--debug]');
     process.exit(1);
 }
+
+console.info('AppDir:', appdir);
 
 
 const rootLoaderDir = path.join(appdir, 'loader');
@@ -201,6 +237,8 @@ function launchDiscord(appDir, profile) {
         default:
             throw 'Unsupported platform';
     }
+
+    console.log();
 
     prog = path.join(appDir, prog);
     const proc = childProcess.spawn(prog, args);
