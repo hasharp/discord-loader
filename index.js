@@ -89,7 +89,7 @@ console.info('AppDir:', appdir);
 const rootLoaderDir = path.join(appdir, 'loader');
 const invokerDir = path.join(rootLoaderDir, 'invoker');
 const userDir = path.join(rootLoaderDir, 'user');
-const profileDir = path.join(rootLoaderDir, 'profiles');
+const profilesDir = path.join(rootLoaderDir, 'profiles');
 const tempDir = path.join(rootLoaderDir, 'temp');
 
 const sessionJson = path.join(tempDir, 'session.json');
@@ -151,7 +151,7 @@ function initialize() {
 
     extractResourceDirSync('root', rootLoaderDir);
 
-    fs.ensureDirSync(profileDir);
+    fs.ensureDirSync(profilesDir);
     fs.ensureDirSync(tempDir);
 }
 
@@ -211,7 +211,8 @@ function launchDiscord(appDir, profile) {
 
     const config = {
         profile: profile,
-        appDir: profileDir,
+        appDir: appDir,
+        profilesDir: profilesDir,
         tempDir: tempDir,
         debug: debug,
     };

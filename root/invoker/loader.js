@@ -46,12 +46,19 @@ const session = require(sessionFile);
 const profile = session.profile;
 fs.unlinkSync(sessionFile);
 
-process.on('exit', () => {
-    writeJsonSync(lastSessionJson, session);
-});
+if (profile) {
+    process.on('exit', () => {
+        writeJsonSync(lastSessionJson, session);
+    });
+}
 
 
 function loader(packageJson) {
+    if (!profile) {
+        // TODO
+        throw 'No profile specified';
+    }
+
     // get path to app.asar
     const resDir = path.join(path.dirname(packageJson), '..');
     const appAsar = path.join(resDir, 'app.asar');
@@ -62,7 +69,7 @@ function loader(packageJson) {
 
     // modify profile dir
     if (profile) {
-        const appDataDir = path.join(session.appDir, profile);
+        const appDataDir = path.join(session.profilesDir, profile);
         const userDataDir = path.join(appDataDir, pkg.name || 'app');
         const tempDir = path.join(session.tempDir, profile);
 
