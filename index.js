@@ -53,7 +53,7 @@ function findAppDir() {
 const argv = minimist(process.argv.slice(2), {
     default: {
         appdir: findAppDir(),   // required
-        profile: 'default',
+        profile: null,
         debug: false,
     },
 });
@@ -75,6 +75,11 @@ if (debug) {
 
 if (!appdir) {
     console.log('Usage: discord-loader --appdir /path/to/Discord/ [--profile profilename] [--debug]');
+    process.exit(1);
+}
+
+if (profile && /^\.+$|\.$|[\/\\]/.test(profile)) {
+    console.log('Invalid profilename specified');
     process.exit(1);
 }
 
@@ -194,7 +199,7 @@ function modify(progDir) {
 /**
  * Launch discord-loader (through modified Discord App).
  * @param appDir {string} - '/path/to/Discord/'
- * @param profile {string} - profile id
+ * @param profile {string|null} - profile id
  */
 function launchDiscord(appDir, profile) {
     try {
