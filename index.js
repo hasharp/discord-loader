@@ -65,8 +65,11 @@ if (debug) {
     console.dir(argv);
     console.info('\nresources:');
     console.dir(resources && resources.keys());
+    /*
+    // currently this will cause an error silently
     console.info('\nprocess:');
     console.dir(process);
+    //*/
     console.info('\n');
 }
 
