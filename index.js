@@ -34,6 +34,9 @@ function isValidAppDir(appDir) {
  */
 function findAppDir() {
     let candidates = [];
+    if (isRelease) {
+        candidates.push(__dirname);
+    }
     switch (os.platform()) {
         case 'win32':
             if (process.env.LOCALAPPDATA) {
