@@ -216,7 +216,7 @@ function launchDiscord(appDir, profile) {
                 });
 
                 if (!apps.length) {
-                    throw 'No apps found.';
+                    throw new Error(`No app found in ${appDir}.`);
                 }
 
                 const latestApp = apps[0];
@@ -228,7 +228,7 @@ function launchDiscord(appDir, profile) {
             break;
 
         default:
-            throw 'Unsupported platform';
+            throw new Error(`Unsupported platform: ${os.platform()}`);
     }
 
     console.log();
