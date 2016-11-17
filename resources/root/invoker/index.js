@@ -1,6 +1,6 @@
 'use strict';
 
-// This script will be invoked by `/app-*.*.*/resources/app/loader.js` (`../../indiv/loader.js`) with `require`.
+// This script will be invoked by `/app-*.*.*/resources/app/loader.js` (`../../loader-template.js`) with `require`.
 
 const electron = require('electron');
 const {app} = electron;

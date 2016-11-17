@@ -87,8 +87,6 @@ const userDir = path.join(rootLoaderDir, 'user');
 const profilesDir = path.join(rootLoaderDir, 'profiles');
 const tempDir = path.join(rootLoaderDir, 'temp');
 
-const rootLoaderJs = path.join(invokerDir, 'loader.js');
-
 
 /**
  * Writes data to file synchronously in JSON format.
@@ -173,11 +171,11 @@ function modify(progDir) {
     fs.ensureDirSync(resAppDir);
     writeJsonSync(appPackageJson, pkg);
 
-    const pathToRootLoaderJs = path.relative(path.dirname(appLoaderJs), rootLoaderJs).replace(/\\/g, '/');
+    const pathToRootInvoker = path.relative(path.dirname(appLoaderJs), invokerDir).replace(/\\/g, '/') + '/';
     const pathToPackageJson = path.relative(path.dirname(appLoaderJs), appPackageJson).replace(/\\/g, '/');
 
     let loaderScript = readResourceSync('loader-template.js');
-    loaderScript = loaderScript.replace(/["']?<LOADER_JS>["']?/g, JSON.stringify(pathToRootLoaderJs));
+    loaderScript = loaderScript.replace(/["']?<INVOKER>["']?/g, JSON.stringify(pathToRootInvoker));
     loaderScript = loaderScript.replace(/["']?<PACKAGE_JSON>["']?/g, JSON.stringify(pathToPackageJson));
     fs.writeFileSync(appLoaderJs, loaderScript);
 }

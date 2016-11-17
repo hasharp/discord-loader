@@ -10,8 +10,7 @@
     const mod = require('module');
 
     const electron = require('electron');
-    const {remote} = electron;
-    const {webFrame} = electron;
+    const {remote, webFrame} = electron;
 
 
     function loadStylesheet(file) {
