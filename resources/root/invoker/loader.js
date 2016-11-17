@@ -33,23 +33,24 @@ function writeJsonSync(file, data) {
 const tempDir = path.join(__dirname, '../temp');
 const lastSessionJson = path.join(tempDir, 'lastsession.json');
 
-let session;
+let loaderConfig;
 
 if (process.env.__loaderConfig) {
-    session = JSON.parse(process.env.__loaderConfig);
+    loaderConfig = JSON.parse(process.env.__loaderConfig);
 } else if (fs.existsSync(lastSessionJson)) {
-    session = require(lastSessionJson);
+    loaderConfig = require(lastSessionJson);
     fs.unlinkSync(lastSessionJson);
 } else {
     console.error(`Failed to load session file:\n  ${lastSessionJson}`);
     process.exit(-1);
 }
 
-const profile = session.profile;
+const profile = loaderConfig.profile;
 
 if (profile) {
     process.on('exit', () => {
-        writeJsonSync(lastSessionJson, session);
+        // for app restarting invoked by app updating or something
+        writeJsonSync(lastSessionJson, loaderConfig);
     });
 }
 
@@ -70,9 +71,9 @@ function loader(packageJson) {
 
     // modify profile dir
     if (profile) {
-        const appDataDir = path.join(session.profilesDir, profile);
+        const appDataDir = path.join(loaderConfig.profilesDir, profile);
         const userDataDir = path.join(appDataDir, pkg.name || 'app');
-        const tempDir = path.join(session.tempDir, profile);
+        const tempDir = path.join(loaderConfig.tempDir, profile);
 
         app.setPath('appData', appDataDir);
         app.setPath('userData', userDataDir);
@@ -89,7 +90,7 @@ function loader(packageJson) {
     // register information
     require('./info.js').initialize({
         profile: profile,
-        session: session,
+        loaderConfig: loaderConfig,
     });
 
     // pre action

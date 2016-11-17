@@ -190,7 +190,7 @@ function modify(progDir) {
  * @param profile {string|null} - profile id
  */
 function launchDiscord(appDir, profile) {
-    const config = {
+    const loaderConfig = {
         profile: profile,
         appDir: appDir,
         profilesDir: profilesDir,
@@ -236,7 +236,7 @@ function launchDiscord(appDir, profile) {
     prog = path.join(appDir, prog);
     const proc = childProcess.spawn(prog, args, {
         env: {
-            __loaderConfig: JSON.stringify(config),
+            __loaderConfig: JSON.stringify(loaderConfig),
         },
     });
     ['stdout', 'stderr'].forEach(intf => {
