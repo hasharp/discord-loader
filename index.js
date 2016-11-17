@@ -106,27 +106,27 @@ function writeJsonSync(file, data) {
 }
 
 /**
- * Copy resource files (./root/*, ./indiv/*).
+ * Copy resource files (./resources/*).
  * @param src  {string} - path to resource directory copy files from
  * @param dest {string} - path to directory copy files to
  */
 function extractResourceDirSync(src, dest) {
     if (isRelease) {
-        const nSrc = path.normalize(src);
+        const nSrc = path.normalize(src) + path.sep;
         const files = resources.keys().filter(file => file.substr(0, nSrc.length) === nSrc);
         files.forEach(file => {
             const content = resources.get(file).toString();
             fs.writeFileSync(path.join(dest, path.relative(src, file)), content);
         });
     } else {
-        fs.copySync(path.join(__dirname, src), dest, {
+        fs.copySync(path.join(__dirname, 'resources', src), dest, {
             clobber: true,
         });
     }
 }
 
 /**
- * Read resource files (./root/*, ./indiv/*).
+ * Read resource files (./resources/*).
  * @param src {string} - path to resource file
  * @returns {string} - content of the file (utf-8)
  */
@@ -134,7 +134,7 @@ function readResourceSync(src) {
     if (isRelease) {
         return resources.get(path.normalize(src)).toString();
     } else {
-        return fs.readFileSync(path.join(__dirname, src), 'utf-8');
+        return fs.readFileSync(path.join(__dirname, 'resources', src), 'utf-8');
     }
 }
 
@@ -189,7 +189,7 @@ function modify(progDir) {
     const pathToRootLoaderJs = path.relative(path.dirname(appLoaderJs), rootLoaderJs).replace(/\\/g, '/');
     const pathToPackageJson = path.relative(path.dirname(appLoaderJs), appPackageJson).replace(/\\/g, '/');
 
-    let loaderScript = readResourceSync('indiv/loader.js');
+    let loaderScript = readResourceSync('loader-template.js');
     loaderScript = loaderScript.replace(/<LOADER_JS>/g, JSON.stringify(pathToRootLoaderJs));
     loaderScript = loaderScript.replace(/<PACKAGE_JSON>/g, JSON.stringify(pathToPackageJson));
     fs.writeFileSync(appLoaderJs, loaderScript);

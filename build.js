@@ -133,10 +133,9 @@ function generateExecutables() {
             return files;
         }
 
-        const baseDir = __dirname;
+        const baseDir = path.join(__dirname, 'resources');
         const files = globFiles(baseDir, [
-            'indiv/**'+'/*',
-            'root/**'+'/*',
+            '**/*',
         ]);
 
         return {
