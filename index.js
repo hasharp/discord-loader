@@ -203,7 +203,7 @@ function launchDiscord(appDir, profile) {
         case 'win32':
             if (!debug) {
                 prog = 'Update.exe';
-                args = ['-processStart', 'Discord.exe', 'test'];
+                args = ['-processStart', 'Discord.exe'];
             } else {
                 const rxSemver = /^app-(\d+)\.(\d+)\.(\d+)$/;
                 const apps = fs.readdirSync(appDir).filter(v => rxSemver.test(v)).sort((a, b) => {
