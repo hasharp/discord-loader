@@ -138,7 +138,7 @@ function readResourceSync(src) {
  * This is called only when this is first launch of discord-loader.
  */
 function initialize() {
-    if (!fs.existsSync(rootLoaderDir)) return;
+    if (fs.existsSync(rootLoaderDir)) return;
 
     extractResourceDirSync('root', rootLoaderDir);
 
