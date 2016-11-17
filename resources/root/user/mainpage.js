@@ -6,4 +6,4 @@
 
 // Your code goes here...
 
-const info = window.discordLoader.info;
+const loaderConfig = window.discordLoader.loaderConfig;

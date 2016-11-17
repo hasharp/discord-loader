@@ -6,4 +6,4 @@
 
 // Your code goes here...
 
-const info = require('../invoker/info.js').acquire();
+const loaderConfig = require('../invoker/loaderconfig.js').acquire();

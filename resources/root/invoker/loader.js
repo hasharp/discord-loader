@@ -87,11 +87,8 @@ function loader(packageJson) {
     // hack electron.app.getAppPath()
     app.setAppPath(appAsar);
 
-    // register information
-    require('./info.js').initialize({
-        profile: profile,
-        loaderConfig: loaderConfig,
-    });
+    // register loaderConfig
+    require('./loaderconfig.js').initialize(loaderConfig);
 
     // pre action
     require('./before.js');

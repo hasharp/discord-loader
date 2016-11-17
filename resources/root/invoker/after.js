@@ -8,7 +8,7 @@ const path = require('path');
 const electron = require('electron');
 const {app, BrowserWindow} = electron;
 
-const info = require('./info.js').acquire();
+const loaderConfig = require('./loaderconfig.js').acquire();
 
 
 const invokerDir = path.join(__dirname);

@@ -35,7 +35,7 @@
 
 
     window.discordLoader = {
-        info: remote.require(path.join(__dirname, 'info.js')).acquire(),
+        info: remote.require(path.join(__dirname, 'loaderconfig.js')).acquire(),
     };
 
 

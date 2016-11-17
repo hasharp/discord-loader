@@ -7,7 +7,7 @@ const path = require('path');
 const electron = require('electron');
 const {app, protocol} = electron;
 
-const info = require('./info.js').acquire();
+const loaderConfig = require('./loaderconfig.js').acquire();
 
 
 const invokerDir = __dirname;
@@ -56,7 +56,7 @@ const directories = {
 
 registerProtocol('l-data', (scheme, request) => {
     let reqPath = request.url.replace(/^[^:]+:[\.\/\\]*/, '');
-    reqPath = reqPath.replace(/~PROFILE~/g, info.profile);
+    reqPath = reqPath.replace(/~PROFILE~/g, loaderConfig.profile);
 
     const match = reqPath.match(/^(.*?)(?:\/(.*))?$/);
     const host = match[1];
