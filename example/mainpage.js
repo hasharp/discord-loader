@@ -34,7 +34,7 @@
                 media.controls = true;
                 media.preload = 'metadata';
 
-                attachment.appendChild(media);
+                attachment.parentElement.insertBefore(media, attachment.nextSibling);
 
                 break;
             }
