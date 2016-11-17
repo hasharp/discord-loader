@@ -192,10 +192,12 @@ function modify(progDir) {
 function launchDiscord(appDir, profile) {
     const loaderConfig = {
         profile,
+        debug,
         appDir,
+        invokerDir,
         profilesDir,
         tempDir,
-        debug,
+        userDir,
     };
 
     let prog, args;
