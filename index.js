@@ -3,7 +3,6 @@
 
 const childProcess = require('child_process');
 const fs = require('fs-extra');
-const os = require('os');
 const path = require('path');
 
 const asar = require('asar-lite');
@@ -33,7 +32,7 @@ function findAppDir() {
     if (isRelease) {
         candidates.push(__dirname);
     }
-    switch (os.platform()) {
+    switch (process.platform) {
         case 'win32':
             if (process.env.LOCALAPPDATA) {
                 candidates.push(path.join(process.env.LOCALAPPDATA, 'Discord'));
@@ -201,7 +200,7 @@ function launchDiscord(appDir, profile) {
     };
 
     let prog, args;
-    switch (os.platform()) {
+    switch (process.platform) {
         case 'win32':
             if (!debug) {
                 prog = 'Update.exe';
@@ -230,7 +229,7 @@ function launchDiscord(appDir, profile) {
             break;
 
         default:
-            throw new Error(`Unsupported platform: ${os.platform()}`);
+            throw new Error(`Unsupported platform: ${process.platform}`);
     }
 
     console.log();
@@ -245,7 +244,7 @@ function launchDiscord(appDir, profile) {
         proc[intf].pipe(process[intf]);
     });
     proc.on('exit', code => {
-        console.log(`Child exited with code ${code}`);
+        console.log(`Child process exited with code ${code}`);
         process.exit(code);
     });
 }
