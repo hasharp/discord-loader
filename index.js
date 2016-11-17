@@ -48,7 +48,7 @@ function findAppDir() {
 
 const argv = minimist(process.argv.slice(2), {
     default: {
-        appdir: findAppDir(),   // required
+        appdir: findAppDir(),
         profile: null,
         debug: false,
     },
@@ -191,11 +191,11 @@ function modify(progDir) {
  */
 function launchDiscord(appDir, profile) {
     const loaderConfig = {
-        profile: profile,
-        appDir: appDir,
-        profilesDir: profilesDir,
-        tempDir: tempDir,
-        debug: debug,
+        profile,
+        appDir,
+        profilesDir,
+        tempDir,
+        debug,
     };
 
     let prog, args;
