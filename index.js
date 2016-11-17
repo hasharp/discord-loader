@@ -178,8 +178,8 @@ function modify(progDir) {
     const pathToPackageJson = path.relative(path.dirname(appLoaderJs), appPackageJson).replace(/\\/g, '/');
 
     let loaderScript = readResourceSync('loader-template.js');
-    loaderScript = loaderScript.replace(/<LOADER_JS>/g, JSON.stringify(pathToRootLoaderJs));
-    loaderScript = loaderScript.replace(/<PACKAGE_JSON>/g, JSON.stringify(pathToPackageJson));
+    loaderScript = loaderScript.replace(/["']?<LOADER_JS>["']?/g, JSON.stringify(pathToRootLoaderJs));
+    loaderScript = loaderScript.replace(/["']?<PACKAGE_JSON>["']?/g, JSON.stringify(pathToPackageJson));
     fs.writeFileSync(appLoaderJs, loaderScript);
 }
 
