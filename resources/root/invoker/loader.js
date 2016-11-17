@@ -15,36 +15,37 @@ console.info('::: loaded', __filename);
 // dump versions
 console.info('process.versions:', process.versions);
 
+/*
+// dump arguments
+console.info('process.argv:', process.argv);
+
+// dump environment variables
+console.info('process.env:', process.env);
+//*/
+
 
 function writeJsonSync(file, data) {
     return fs.writeFileSync(file, JSON.stringify(data, null, '  '));
 }
 
-function firstExistingFile(files) {
-    for (let file of files) {
-        if (!file) continue;
-        try {
-            fs.accessSync(file, fs.F_OK);
-            return file;
-        } catch (e) {}
-    }
-    return null;
-}
 
+// load session data (from environment variable or file)
 const tempDir = path.join(__dirname, '../temp');
-const sessionJson = path.join(tempDir, 'session.json');
 const lastSessionJson = path.join(tempDir, 'lastsession.json');
-const sessionFileCandidates = [sessionJson, lastSessionJson];
-const sessionFile = firstExistingFile(sessionFileCandidates);
 
-if (!sessionFile) {
-    console.error(`Failed to load session file:\n  ${sessionJson}\n  ${lastSessionJson}`);
+let session;
+
+if (process.env.__loaderConfig) {
+    session = JSON.parse(process.env.__loaderConfig);
+} else if (fs.existsSync(lastSessionJson)) {
+    session = require(lastSessionJson);
+    fs.unlinkSync(lastSessionJson);
+} else {
+    console.error(`Failed to load session file:\n  ${lastSessionJson}`);
     process.exit(-1);
 }
 
-const session = require(sessionFile);
 const profile = session.profile;
-fs.unlinkSync(sessionFile);
 
 if (profile) {
     process.on('exit', () => {

@@ -88,7 +88,6 @@ const userDir = path.join(rootLoaderDir, 'user');
 const profilesDir = path.join(rootLoaderDir, 'profiles');
 const tempDir = path.join(rootLoaderDir, 'temp');
 
-const sessionJson = path.join(tempDir, 'session.json');
 const rootLoaderJs = path.join(invokerDir, 'loader.js');
 
 
@@ -191,12 +190,6 @@ function modify(progDir) {
  * @param profile {string|null} - profile id
  */
 function launchDiscord(appDir, profile) {
-    if (fs.existsSync(sessionJson)) {
-        console.error('Another discord-loader is in-progress, please try again later.');
-        console.error(`If the problem persists, please delete file "${sessionJson}".`);
-        return;
-    }
-
     const config = {
         profile: profile,
         appDir: appDir,
@@ -204,14 +197,13 @@ function launchDiscord(appDir, profile) {
         tempDir: tempDir,
         debug: debug,
     };
-    writeJsonSync(sessionJson, config);
 
     let prog, args;
     switch (os.platform()) {
         case 'win32':
             if (!debug) {
                 prog = 'Update.exe';
-                args = ['-processStart', 'Discord.exe'];
+                args = ['-processStart', 'Discord.exe', 'test'];
             } else {
                 const rxSemver = /^app-(\d+)\.(\d+)\.(\d+)$/;
                 const apps = fs.readdirSync(appDir).filter(v => rxSemver.test(v)).sort((a, b) => {
@@ -228,9 +220,10 @@ function launchDiscord(appDir, profile) {
                 }
 
                 const latestApp = apps[0];
-                console.log(`latest app: ${latestApp}`);
+                console.log('Latest app:', latestApp);
 
                 prog = path.join(latestApp, 'Discord.exe');
+                args = [];
             }
             break;
 
@@ -241,7 +234,11 @@ function launchDiscord(appDir, profile) {
     console.log();
 
     prog = path.join(appDir, prog);
-    const proc = childProcess.spawn(prog, args);
+    const proc = childProcess.spawn(prog, args, {
+        env: {
+            __loaderConfig: JSON.stringify(config),
+        },
+    });
     ['stdout', 'stderr'].forEach(intf => {
         proc[intf].pipe(process[intf]);
     });
