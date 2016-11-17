@@ -10,10 +10,6 @@ const {app, protocol} = electron;
 const loaderConfig = require('./loaderconfig.js').acquire();
 
 
-const invokerDir = __dirname;
-const userDir = path.join(__dirname, '../user');
-
-
 console.info('::: loaded', __filename);
 
 
@@ -26,8 +22,8 @@ function registerProtocol(scheme, func) {
         const internalScheme = `${scheme}-int`;
 
         protocol.registerFileProtocol(internalScheme, (request, callback) => {
-            console.log(internalScheme, request);
             const file = func(scheme, request);
+            console.log(internalScheme, request, file);
             callback({
                 path: file,
             });
@@ -49,12 +45,12 @@ function registerProtocol(scheme, func) {
 }
 
 
-const directories = {
-    'user': userDir,
-    'invoker': invokerDir,
-};
-
 registerProtocol('l-data', (scheme, request) => {
+    const directories = {
+        user: loaderConfig.userDir,
+        invoker: loaderConfig.invokerDir,
+    };
+
     let reqPath = request.url.replace(/^[^:]+:[\.\/\\]*/, '');
     reqPath = reqPath.replace(/~PROFILE~/g, loaderConfig.profile);
 
@@ -66,10 +62,8 @@ registerProtocol('l-data', (scheme, request) => {
         return false;
     }
 
-    const baseDir = directories[host];
-    return path.join(baseDir, file);
+    return path.join(directories[host], file);
 });
 
 
-const userBeforeJs = path.join(userDir, 'before.js');
-require(userBeforeJs);
+require(path.join(loaderConfig.userDir, 'before.js'));

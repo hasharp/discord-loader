@@ -30,8 +30,7 @@ function writeJsonSync(file, data) {
 
 
 // load session data (from environment variable or file)
-const tempDir = path.join(__dirname, '../temp');
-const lastSessionJson = path.join(tempDir, 'lastsession.json');
+const lastSessionJson = path.join(__dirname, '../temp/lastsession.json');
 
 let loaderConfig;
 
@@ -44,6 +43,9 @@ if (process.env.__loaderConfig) {
     console.error(`Failed to load session file:\n  ${lastSessionJson}`);
     process.exit(-1);
 }
+
+require('./loaderconfig.js').initialize(loaderConfig);
+
 
 const profile = loaderConfig.profile;
 
@@ -86,9 +88,6 @@ function loader(packageJson) {
 
     // hack electron.app.getAppPath()
     app.setAppPath(appAsar);
-
-    // register loaderConfig
-    require('./loaderconfig.js').initialize(loaderConfig);
 
     // pre action
     require('./before.js');

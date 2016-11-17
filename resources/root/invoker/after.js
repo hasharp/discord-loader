@@ -2,31 +2,21 @@
 
 // This script will be invoked by `./loader.js` with `require` after the Discord App is loaded.
 
-const fs = require('fs');
 const path = require('path');
 
 const electron = require('electron');
-const {app, BrowserWindow} = electron;
+const {BrowserWindow} = electron;
 
 const loaderConfig = require('./loaderconfig.js').acquire();
-
-
-const invokerDir = path.join(__dirname);
-const userDir = path.join(__dirname, '../user');
-const tempDir = path.join(__dirname, '../temp');
-
-const mainpageJs = path.join(invokerDir, 'mainpage.js');
 
 
 console.info('::: loaded', __filename);
 
 
-let isTempFileDeleted = false;
-
 function checkFunc() {
-    const windows = BrowserWindow.getAllWindows();
+    const mainpageJs = path.join(loaderConfig.invokerDir, 'mainpage.js');
 
-    windows.forEach(window => {
+    BrowserWindow.getAllWindows().forEach(window => {
         const contents = window.webContents;
         const url = contents.getURL();
 
@@ -42,5 +32,4 @@ function checkFunc() {
 })();
 
 
-const userAfterJs = path.join(userDir, 'after.js');
-require(userAfterJs);
+require(path.join(loaderConfig.userDir, 'after.js'));
