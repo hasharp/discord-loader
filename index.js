@@ -19,12 +19,8 @@ const resources = isRelease && require('nexeres.js');
  * @returns {boolean} - true if valid
  */
 function isValidAppDir(appDir) {
-    try {
-        fs.accessSync(path.join(appDir, 'app.ico'), fs.F_OK);
-        fs.accessSync(path.join(appDir, 'packages'), fs.F_OK);
-    } catch (e) {
-        return false;
-    }
+    if (!fs.existsSync(path.join(appDir, 'app.ico'))) return false;
+    if (!fs.existsSync(path.join(appDir, 'packages'))) return false;
     return true;
 }
 
@@ -144,10 +140,7 @@ function readResourceSync(src) {
  * This is called only when this is first launch of discord-loader.
  */
 function initialize() {
-    try {
-        fs.accessSync(rootLoaderDir, fs.F_OK);
-        return;
-    } catch(e) {}
+    if (!fs.existsSync(rootLoaderDir)) return;
 
     extractResourceDirSync('root', rootLoaderDir);
 
@@ -175,11 +168,7 @@ function modify(progDir) {
     const appPackageJson = path.join(resAppDir, 'package.json');
     const appLoaderJs = path.join(resAppDir, 'loader.js');
 
-    try {
-        fs.accessSync(resAppAsar, fs.F_OK);
-    } catch (e) {
-        return;
-    }
+    if (!fs.existsSync(resAppAsar)) return;
 
     let pkg = JSON.parse(asar.extractFile(resAppAsar, 'package.json'));
     pkg.main = path.relative(path.dirname(appPackageJson), appLoaderJs).replace(/\\/g, '/');
@@ -202,12 +191,11 @@ function modify(progDir) {
  * @param profile {string|null} - profile id
  */
 function launchDiscord(appDir, profile) {
-    try {
-        fs.accessSync(sessionJson, fs.F_OK);
+    if (fs.existsSync(sessionJson)) {
         console.error('Another discord-loader is in-progress, please try again later.');
         console.error(`If the problem persists, please delete file "${sessionJson}".`);
         return;
-    } catch (e) {}
+    }
 
     const config = {
         profile: profile,
