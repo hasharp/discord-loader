@@ -13,7 +13,7 @@ const loaderConfig = require('./loaderconfig.js').acquire();
 console.info('::: loaded', __filename);
 
 
-function registerProtocol(scheme, func) {
+function registerProtocol(scheme, resolveHttp, resolveFile) {
     // to enable `require` with relative path, register custom http protocol via custom file protocol
 
     protocol.registerStandardSchemes([scheme]);
@@ -22,8 +22,7 @@ function registerProtocol(scheme, func) {
         const internalScheme = `${scheme}-int`;
 
         protocol.registerFileProtocol(internalScheme, (request, callback) => {
-            const file = func(scheme, request);
-            console.log(internalScheme, request, file);
+            const file = resolveFile(scheme, request);
             callback({
                 path: file,
             });
@@ -34,27 +33,36 @@ function registerProtocol(scheme, func) {
         });
 
         protocol.registerHttpProtocol(scheme, (request, callback) => {
-            const reqPath = request.url.replace(/^[^:]+:[\.\/\\]*/, '');
-            console.log(scheme, request, reqPath);
-            callback({
-                url: `${internalScheme}://${reqPath}`,
-                method: 'GET',
-            });
+            const reqPath = request.url.replace(/^.+?:[\.\/\\]*/, '');
+            const resolvedReqPath = resolveHttp(reqPath);
+            if (resolvedReqPath !== reqPath) {
+                // redirect
+                callback({
+                    url: `${scheme}://${resolvedReqPath}`,
+                    method: 'GET',
+                });
+            } else {
+                // pass to internal protocol
+                callback({
+                    url: `${internalScheme}://${resolvedReqPath}`,
+                    method: 'GET',
+                });
+            }
         });
     });
 }
 
 
-registerProtocol('l-data', (scheme, request) => {
+registerProtocol('l-data', path => {
+    path = path.replace(/~PROFILE~/g, loaderConfig.profile);
+    return path;
+}, (scheme, request) => {
     const directories = {
         user: loaderConfig.userDir,
         invoker: loaderConfig.invokerDir,
     };
 
-    let reqPath = request.url.replace(/^[^:]+:[\.\/\\]*/, '');
-    reqPath = reqPath.replace(/~PROFILE~/g, loaderConfig.profile);
-
-    const match = reqPath.match(/^(.*?)(?:\/(.*))?$/);
+    const match = request.url.match(/^.+?:[\.\/\\]*(.*?)(?:\/(.*))?$/);
     const host = match[1];
     const file = match[2];
 
