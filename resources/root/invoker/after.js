@@ -5,7 +5,7 @@
 const path = require('path');
 
 const electron = require('electron');
-const {BrowserWindow} = electron;
+const {app} = electron;
 
 const loaderConfig = require('./loaderconfig.js').acquire();
 
@@ -13,23 +13,19 @@ const loaderConfig = require('./loaderconfig.js').acquire();
 console.info('::: loaded', __filename);
 
 
-function checkFunc() {
-    const mainpageJs = path.join(loaderConfig.invokerDir, 'mainpage.js');
+app.on('browser-window-created', (event, window) => {
+    const webContents = window.webContents;
 
-    BrowserWindow.getAllWindows().forEach(window => {
-        const contents = window.webContents;
-        const url = contents.getURL();
+    // we have to observe 'did-finish-load'
+    // see https://github.com/electron/electron/blob/master/lib/browser/api/web-contents.js
+    webContents.on('did-finish-load', () => {
+        const url = webContents.getURL();
+        if (!/^https?:\/\/[\w\.-]+\/channels(\/|$)/.test(url)) return;
 
-        if (/^https?:\/\/[\w\.-]+\/channels(\/|$)/.test(url)) {
-            contents.executeJavaScript(`if(!window.isScriptLoaded){window.isScriptLoaded=true;require(${JSON.stringify(mainpageJs)})}`);
-        }
+        const mainpageJs = path.join(loaderConfig.invokerDir, 'mainpage.js');
+        webContents.executeJavaScript(`if(!window.isMainPageScriptLoaded){window.isMainPageScriptLoaded=true;require(${JSON.stringify(mainpageJs)})}`);
     });
-}
-
-(function monitorWebpage() {
-    checkFunc();
-    setTimeout(monitorWebpage, 1000);
-})();
+});
 
 
 require(path.join(loaderConfig.userDir, 'after.js'));
