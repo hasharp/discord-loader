@@ -204,7 +204,7 @@ function launchDiscord(appDir, profile) {
                 prog = 'Update.exe';
                 args = ['-processStart', 'Discord.exe'];
             } else {
-                const rxSemver = /^app-(\d+)\.(\d+)\.(\d+)$/;
+                const rxSemver = /^app-(\d+)\.(\d+)\.(\d+)/;
                 const apps = fs.readdirSync(appDir).filter(v => rxSemver.test(v)).sort((a, b) => {
                     const matches = [a, b].map(v => v.match(rxSemver));
                     for (let i = 1; i <= 3; i++) {
