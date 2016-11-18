@@ -28,7 +28,7 @@ function registerProtocol(scheme, resolveHttp, resolveFile) {
             });
         }, error => {
             if (error) {
-                console.error(`Failed to register protocol '${scheme}'`);
+                throw new Error(`Failed to register custom file protocol '${scheme}'.`);
             }
         });
 
@@ -47,6 +47,10 @@ function registerProtocol(scheme, resolveHttp, resolveFile) {
                     url: `${internalScheme}://${resolvedReqPath}`,
                     method: 'GET',
                 });
+            }
+        }, error => {
+            if (error) {
+                throw new Error(`Failed to register custom http protocol '${scheme}'.`);
             }
         });
     });
