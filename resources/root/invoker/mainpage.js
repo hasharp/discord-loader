@@ -5,7 +5,6 @@
 // This script will be invoked by `./after.js` with `require` through `contents.executeJavaScript`.
 
 const path = require('path');
-const mod = require('module');
 
 const electron = require('electron');
 const {remote, webFrame} = electron;
