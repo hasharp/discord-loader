@@ -10,7 +10,7 @@ function ensureArray(value) {
 }
 
 (function monitorAttachments() {
-    let attachments = document.querySelectorAll('.attachment:not(.processed-attachment)');
+    const attachments = document.querySelectorAll('.attachment:not(.processed-attachment)');
     attachments.forEach(attachment => {
         const fileLink = attachment.getElementsByTagName('a')[0];
         if (!fileLink) return;
@@ -21,7 +21,7 @@ function ensureArray(value) {
         const extension = fileUrl.replace(/^.+\./, '');
         const mediaTypes = types[extension] ? ensureArray(types[extension]) : ['video', 'audio'];
 
-        for (let mediaType of mediaTypes) {
+        for (const mediaType of mediaTypes) {
             let media = document.createElement(mediaType);
 
             const mimeType = `${mediaType}/${extension}`;
