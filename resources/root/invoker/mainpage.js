@@ -16,12 +16,6 @@ const loaderConfig = remote.require(path.join(__dirname, 'loaderconfig.js')).acq
 console.info('::: loaded', __filename);
 
 
-// set require path
-const userDir = path.join(__dirname, '../user');
-process.env.NODE_PATH += path.delimiter + userDir;
-mod.Module._initPaths();
-
-
 // set window.discordLoader
 window.discordLoader = {
     loaderConfig,
@@ -38,9 +32,9 @@ window.discordLoader = {
 });
 
 
-// inject stylesheet and script
-function loadUserFiles() {
-    function loadStylesheet(file) {
+// inject user stylesheet
+function injectUserFiles() {
+    function injectStylesheet(file) {
         const head = document.getElementsByTagName('head')[0];
         let link = document.createElement('link');
         link.rel = 'stylesheet';
@@ -48,20 +42,19 @@ function loadUserFiles() {
         head.appendChild(link);
     }
 
-    function loadScript(file) {
-        let script = document.createElement('script');
-        script.src = file;
-        document.body.appendChild(script);
-    }
-
-    loadStylesheet('l-data://user/mainpage.css');
-    loadScript('l-data://user/mainpage.js');
+    injectStylesheet('l-data://user/mainpage.css');
 }
 
 if (document.readyState === 'complete') {
-    loadUserFiles();
+    injectUserFiles();
 } else {
     document.addEventListener('DOMContentLoaded', () => {
-        loadUserFiles();
+        injectUserFiles();
     });
 }
+
+
+// load user script (call asynchronously)
+setImmediate(() => {
+    require(path.join(loaderConfig.userDir, 'mainpage.js'));
+});
