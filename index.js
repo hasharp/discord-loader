@@ -17,7 +17,7 @@ const argv = minimist(process.argv.slice(2), {
 const {appdir, profile, debug} = argv;
 
 
-const discordDir = appdir || Discord.searchDiscordDir()[0];
+const discordDir = appdir || Discord.searchDiscordDirs()[0];
 
 if (!discordDir) {
     console.log('Usage: discord-loader --appdir /path/to/Discord/ [--profile profilename] [--debug]');
