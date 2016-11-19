@@ -6,6 +6,14 @@
 let loaderConfig;
 
 module.exports = {
-    initialize: newLoaderConfig => loaderConfig ? false : (loaderConfig = newLoaderConfig, true),
-    acquire: () => loaderConfig ? Object.assign({}, loaderConfig) : null,
+    initialize(newLoaderConfig) {
+        if (loaderConfig) return false;
+        loaderConfig = newLoaderConfig;
+        return true;
+    },
+
+    acquire() {
+        if (!loaderConfig) return null;
+        return Object.assign({}, loaderConfig);
+    },
 };
