@@ -67,7 +67,7 @@ function generateLicenseFile() {
         }, (err, obj) => {
             if (err) return reject(err);
 
-            let libraries = {
+            const libraries = {
                 'Node.js': {
                     versions: [nodeVer],
                     website: 'https://nodejs.org/en/',

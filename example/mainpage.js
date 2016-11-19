@@ -22,7 +22,7 @@ function ensureArray(value) {
         const mediaTypes = types[extension] ? ensureArray(types[extension]) : ['video', 'audio'];
 
         for (const mediaType of mediaTypes) {
-            let media = document.createElement(mediaType);
+            const media = document.createElement(mediaType);
 
             const mimeType = `${mediaType}/${extension}`;
             if (!media.canPlayType(mimeType)) {
