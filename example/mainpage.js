@@ -2,7 +2,7 @@
 'use strict';
 
 const types = {
-    'ogg': 'audio',
+    ogg: 'audio',
 };
 
 function ensureArray(value) {
