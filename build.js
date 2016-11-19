@@ -54,6 +54,7 @@ function getLicenseUrl(name, info) {
 
 /**
  * Generate license file.
+ * @returns {Promise} - Promise that resolves when license file is written.
  */
 function generateLicenseFile() {
     return new Promise((resolve, reject) => {
@@ -122,6 +123,7 @@ function generateLicenseFile() {
 
 /**
  * Generate executable file.
+ * @returns {Promise} - Promise that resolves when executable file is created.
  */
 function generateExecutables() {
     /**
