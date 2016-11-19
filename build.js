@@ -49,7 +49,7 @@ function getLicenseUrl(name, info) {
         return info.repository.replace(/https?:\/\/github.com\//, 'https://raw.githubusercontent.com/') + '/master/' + filePath;
     }
 
-    throw `Unknown hosting: ${info.repository} (${name})`;
+    throw new Error(`Unknown hosting: ${info.repository} (${name})`);
 }
 
 /**
@@ -101,8 +101,8 @@ function generateLicenseFile() {
                     };
                 } else {
                     const libObj = libraries[name];
-                    if (libObj.licenseName !== licenseName) throw `License type changed (${name})`;
-                    if (libObj.licenseUrl !== licenseUrl) throw `License file changed (${name})`;
+                    if (libObj.licenseName !== licenseName) throw new Error(`License type changed (${name})`);
+                    if (libObj.licenseUrl !== licenseUrl) throw new Error(`License file changed (${name})`);
 
                     libraries[name].versions.push(version);
                 }
