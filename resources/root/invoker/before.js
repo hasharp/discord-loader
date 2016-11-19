@@ -35,19 +35,15 @@ function registerProtocol(scheme, resolveHttp, resolveFile) {
         protocol.registerHttpProtocol(scheme, (request, callback) => {
             const reqPath = request.url.replace(/^.+?:[./\\]*/, '');
             const resolvedReqPath = resolveHttp(reqPath);
-            if (resolvedReqPath !== reqPath) {
+            callback(resolvedReqPath !== reqPath ? {
                 // redirect
-                callback({
-                    url: `${scheme}://${resolvedReqPath}`,
-                    method: 'GET',
-                });
-            } else {
+                url: `${scheme}://${resolvedReqPath}`,
+                method: 'GET',
+            } : {
                 // pass to internal protocol
-                callback({
-                    url: `${internalScheme}://${resolvedReqPath}`,
-                    method: 'GET',
-                });
-            }
+                url: `${internalScheme}://${resolvedReqPath}`,
+                method: 'GET',
+            });
         }, error => {
             if (error) {
                 throw new Error(`Failed to register custom http protocol '${scheme}'.`);
