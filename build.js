@@ -112,8 +112,11 @@ function generateLicenseFile() {
                 const libObj = libraries[library];
                 const versions = libObj.versions.length ? ' ' + libObj.versions.map(v => `v${v}`).join(', ') : '';
 
-                content += `- ${libObj.website?`[${library}](${libObj.website})`:`${library}`}${versions}  \n`;
-                content += `  Released under the ${libObj.licenseUrl?`[${libObj.licenseName}](${libObj.licenseUrl})`:`${libObj.licenseName}`}.  \n\n`;
+                const mdLibTitle = libObj.website ? `[${library}](${libObj.website})` : `${library}`;
+                const mdLibLicense = libObj.licenseUrl ? `[${libObj.licenseName}](${libObj.licenseUrl})` : `${libObj.licenseName}`;
+
+                content += `- ${mdLibTitle}${versions}  \n`;
+                content += `  Released under the ${mdLibLicense}.  \n\n`;
             }
             content = content.replace(/\n+$/, '\n');
 
