@@ -9,7 +9,7 @@ const path = require('path');
 const electron = require('electron');
 const {remote, webFrame} = electron;
 
-// To unwrap ipc getter / setter, calls `Object.assign` and create new object.
+// create new object by `Object.assign` to unwrap ipc getter / setter.
 const loaderConfig = Object.assign({}, remote.require(path.join(__dirname, 'loaderconfig.js')).acquire());
 
 
