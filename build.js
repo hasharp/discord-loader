@@ -25,7 +25,7 @@ const licenseFile = path.join(buildDir, 'LICENSE.md');
 
 /**
  * Append extension for executable files, currently only for Windows platform.
- * @param exeFile {string} - filename of an executable file without the extension
+ * @param {string} exeFile - filename of an executable file without the extension
  * @returns {string} - filename with the extension
  */
 function addExtension(exeFile) {
@@ -34,8 +34,8 @@ function addExtension(exeFile) {
 
 /**
  * Get the URL to the license file of the library.
- * @param name {string} - the name of the library
- * @param info {Object} - the license information object of the library
+ * @param {string} name - the name of the library
+ * @param {Object} info - the license information object of the library
  * @returns {string} - filename with the extension
  */
 function getLicenseUrl(name, info) {
