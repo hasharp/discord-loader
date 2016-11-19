@@ -9,6 +9,8 @@ const globAll = require('glob-all');
 const licenseChecker = require('license-checker');
 const nexe = require('nexe');
 
+const posixpath = require('./lib/posixpath.js');
+
 
 const pkg = require('./package.json');
 const cpuNum = os.cpus().length;
@@ -39,7 +41,7 @@ function addExtension(exeFile) {
 function getLicenseUrl(name, info) {
     if (!info.repository || !info.licenseFile) return false;
 
-    const filePath = info.licenseFile.replace(/\\/g, '/').replace(/^.+\/node_modules\/.+?\//, '');
+    const filePath = posixpath(info.licenseFile).replace(/^.+\/node_modules\/.+?\//, '');
 
     if (/^https?:\/\/github\.com\//.test(info.repository)) {
         // assume `master` branch as a main branch
