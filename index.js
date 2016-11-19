@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use strict';
 
 const Discord = require('./lib/discord.js');

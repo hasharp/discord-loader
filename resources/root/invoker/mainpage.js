@@ -56,5 +56,6 @@ if (document.readyState === 'complete') {
 
 // load user script (call asynchronously)
 setImmediate(() => {
+    /* eslint-disable global-require */
     require(path.join(loaderConfig.userDir, 'mainpage.js'));
 });
