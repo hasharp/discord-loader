@@ -15,7 +15,7 @@ const posixpath = require('./lib/posixpath.js');
 
 const pkg = require('./package.json');
 const cpuNum = os.cpus().length;
-const nodeVer = process.version.replace(/[^\d\.]/g, '');
+const nodeVer = process.version.replace(/[^\d.]/g, '');
 
 const buildDir = path.join(__dirname, 'build');
 const resDir = path.join(buildDir, 'resources');

@@ -33,7 +33,7 @@ function registerProtocol(scheme, resolveHttp, resolveFile) {
         });
 
         protocol.registerHttpProtocol(scheme, (request, callback) => {
-            const reqPath = request.url.replace(/^.+?:[\.\/\\]*/, '');
+            const reqPath = request.url.replace(/^.+?:[./\\]*/, '');
             const resolvedReqPath = resolveHttp(reqPath);
             if (resolvedReqPath !== reqPath) {
                 // redirect
@@ -66,7 +66,7 @@ registerProtocol('l-data', path => {
         invoker: loaderConfig.invokerDir,
     };
 
-    const match = request.url.match(/^.+?:[\.\/\\]*(.*?)(?:\/(.*))?$/);
+    const match = request.url.match(/^.+?:[./\\]*(.*?)(?:\/(.*))?$/);
     const host = match[1];
     const file = match[2];
 

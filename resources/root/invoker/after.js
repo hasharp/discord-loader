@@ -20,7 +20,7 @@ app.on('browser-window-created', (event, window) => {
     // see https://github.com/electron/electron/blob/master/lib/browser/api/web-contents.js
     webContents.on('did-finish-load', () => {
         const url = webContents.getURL();
-        if (!/^https?:\/\/[\w\.-]+\/channels(\/|$)/.test(url)) return;
+        if (!/^https?:\/\/[\w.-]+\/channels(\/|$)/.test(url)) return;
 
         const mainpageJs = path.join(loaderConfig.invokerDir, 'mainpage.js');
         webContents.executeJavaScript(`if(!window.isMainPageScriptLoaded){window.isMainPageScriptLoaded=true;require(${JSON.stringify(mainpageJs)})}`);
