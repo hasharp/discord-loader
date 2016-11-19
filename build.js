@@ -188,7 +188,11 @@ function generateExecutables() {
         console.dir(nexeOptions);
 
         nexe.compile(nexeOptions, err => {
-            err ? reject(err) : resolve();
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
         });
     });
 }
